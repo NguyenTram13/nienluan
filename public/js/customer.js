@@ -7,47 +7,51 @@ window.addEventListener("load", function () {
 
   let keyword = JSON.parse(localStorage.getItem("kyw")) || "";
   inputSearchProduct.value = keyword;
+
+  function setLoading(selector) {
+    setTimeout(() => {
+      loader.forEach((item) => {
+        console.log(item);
+        selector.style.visibility = "hidden";
+
+        item.style.display = "block";
+      });
+    }, 500);
+  }
+
+  //loading product page begin
   selectProduct.addEventListener("change", function (e) {
-    setTimeout(() => {
-      localStorage.setItem("idSelect", JSON.stringify(e.target.value));
-      loader.forEach((item) => {
-        console.log(item);
-        tableProduct.style.display = "none";
-
-        item.style.display = "block";
-      });
-    }, 500);
+    localStorage.setItem("idSelect", JSON.stringify(e.target.value));
+    setLoading(tableProduct);
     setTimeout(() => {
       formProduct.submit();
     }, 1500);
   });
+
   inputSearchProduct.addEventListener("keyup", function (e) {
-    setTimeout(() => {
-      localStorage.setItem("kyw", JSON.stringify(e.target.value));
-      loader.forEach((item) => {
-        console.log(item);
-        tableProduct.style.display = "none";
-
-        item.style.display = "block";
-      });
-    }, 500);
+    localStorage.setItem("kyw", JSON.stringify(e.target.value));
+    setLoading(tableProduct);
     setTimeout(() => {
       formProduct.submit();
     }, 1500);
   });
+
   formProduct.addEventListener("submit", function (e) {
     e.preventDefault();
     loader.forEach((item) => {
       console.log(item);
+      tableProduct.style.visibility = "hidden";
+
       item.style.display = "block";
     });
     setTimeout(() => {
       loader.forEach((item) => {
         console.log(item);
-        tableProduct.style.display = "none";
+        tableProduct.style.visibility = "visible";
 
         item.style.display = "none";
       });
     }, 1000);
   });
+  //loading product page end
 });
