@@ -19,6 +19,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo _PATH_ROOT_PUBLIC . '/dist/css/adminlte.min.css' ?>">
   <link rel="stylesheet" href="<?php echo _PATH_ROOT_PUBLIC . '/css/customer.css' ?>">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
 
@@ -227,6 +228,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <p>Sản phẩm</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="<?php echo _WEB_ROOT . '/groups/list' ?>" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Nhóm Người dùng</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="<?php echo _WEB_ROOT . '/user/list' ?>" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Người dùng</p>
+                  </a>
+                </li>
               </ul>
             </li>
 
@@ -277,7 +290,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- AdminLTE App -->
   <script src="<?php echo _PATH_ROOT_PUBLIC . '/dist/js/adminlte.min.js' ?>"></script>
   <script src="<?php echo _PATH_ROOT_PUBLIC . '/js/customer.js' ?>"></script>
-
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 
 </html>

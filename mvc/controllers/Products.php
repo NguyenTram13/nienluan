@@ -1,8 +1,6 @@
 <?php
 
-date_default_timezone_set(
-    'Asia/Ho_Chi_Minh'
-);
+
 class Products extends Controller
 {
     private $products;
@@ -86,7 +84,7 @@ class Products extends Controller
                 ]
             );
         } else {
-            $listCate = $this->cates->getCate();
+            $listCate = $this->cates->getCate("");
 
             return $this->view(
                 'admin',
