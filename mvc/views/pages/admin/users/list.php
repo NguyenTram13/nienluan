@@ -7,16 +7,16 @@
     }
     ?>
     <p class="d-block text-end ">
-        <a href="<?php echo _WEB_ROOT . '/products/add' ?>" class="px-5 btn btn-primary">Add</a>
+        <a href="<?php echo _WEB_ROOT . '/users/add' ?>" class="px-5 btn btn-primary">Add</a>
     </p>
     <form method="POST" action="" class="form-product">
         <div class="row">
             <div class=" col-2">
-                <select class="form-select select-product" name="cate" aria-label="Default select example">
-                    <option value="0" <?php echo 0 === $data['idCateSelected'] ? "selected" : "" ?>>Chọn nhóm người dùng </option>
+                <select class="form-select select-product" name="grps" aria-label="Default select example">
+                    <option value="0" <?php echo 0 === $data['idGrpsSelected'] ? "selected" : "" ?>>Chọn danh mục </option>
                     <?php
-                    foreach ($data['Cates'] as $item) {
-                        $selected =   $item['id'] == $data['idCateSelected'] ? "selected" : "";
+                    foreach ($data['Grps'] as $item) {
+                        $selected =   $item['id'] == $data['idGrpsSelected'] ? "selected" : "";
                         echo '<option ' . $selected . ' value="' . $item['id'] . '">' . $item['name'] . '</option> ';
                     }
 

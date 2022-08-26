@@ -1,12 +1,12 @@
 <?php
 
 
-class Category extends Controller
+class Groups extends Controller
 {
 
     function __construct()
     {
-        $this->category = $this->model('CategoryModel');
+        $this->groups = $this->model('GroupModel');
     }
     function list()
     {
@@ -14,12 +14,12 @@ class Category extends Controller
         if (isset($_POST['kyw']) && $_POST['kyw'] != "") {
             $kyw = $_POST['kyw'];
         }
-        $cate = $this->category->getCate($kyw);
+        $grps = $this->groups->getGrps($kyw);
         return $this->view(
             'admin',
             [
-                'page' => 'category/list',
-                'cates' => $cate,
+                'page' => 'groups/list',
+                'grps' => $grps,
 
 
             ]
@@ -31,16 +31,16 @@ class Category extends Controller
         if (isset($_POST['name']) && $_POST['name'] != "") {
             $name = $_POST['name'];
             $date = date('Y-m-d H:i:s');
-            $add = $this->category->addCate($name, $date);
+            $add = $this->groups->addGrps($name, $date);
             if ($add) {
-                $thongbao = "Thêm danh mục thành công";
+                $thongbao = "Thêm nhóm người dùng thành công";
             } else {
-                $thongbao = "Thêm danh mục thất bại";
+                $thongbao = "Thêm nhóm người dùng thất bại";
             }
             return $this->view(
                 'admin',
                 [
-                    'page' => 'category/add',
+                    'page' => 'groups/add',
 
                     'thongbao' => $thongbao
 
@@ -50,7 +50,7 @@ class Category extends Controller
             return $this->view(
                 'admin',
                 [
-                    'page' => 'category/add',
+                    'page' => 'groups/add',
 
 
                 ]
@@ -64,32 +64,32 @@ class Category extends Controller
             $date = date('Y-m-d H:i:s');
 
             $name = $_POST['name'];
-            $edit = $this->category->editCate($id, $name, $date);
+            $edit = $this->groups->editGrps($id, $name, $date);
             if ($edit) {
-                $thongbao = "Sửa danh mục thành công";
+                $thongbao = "Sửa nhóm người dùng thành công";
             } else {
-                $thongbao = "Sửa danh mục thất bại";
+                $thongbao = "Sửa nhóm người dùng thất bại";
             }
-            $oneCate = $this->category->getone_Cate($id);
+            $oneGrps = $this->groups->getone_Grps($id);
             return $this->view(
                 'admin',
                 [
-                    'page' => 'category/edit',
+                    'page' => 'groups/edit',
 
                     'thongbao' => $thongbao,
-                    'cate' => $oneCate,
+                    'grps' => $oneGrps,
 
                 ]
             );
         } else {
-            $oneCate = $this->category->getone_Cate($id);
+            $oneGrps = $this->groups->getone_Grps($id);
 
 
             return $this->view(
                 'admin',
                 [
-                    'page' => 'category/edit',
-                    'cate' => $oneCate,
+                    'page' => 'groups/edit',
+                    'grps' => $oneGrps,
 
                 ]
             );
@@ -98,18 +98,18 @@ class Category extends Controller
     function delete($id)
     {
 
-        $del = $this->category->deleteCate($id);
+        $del = $this->groups->deleteGrps($id);
         if ($del) {
-            $thongbao = "Xóa danh mục thành công";
+            $thongbao = "Xóa nhóm người dùng thành công";
         } else {
-            $thongbao = "Xóa danh mục thất bại";
+            $thongbao = "Xóa nhóm người dùng thất bại";
         }
-        $cate = $this->category->getCate("");
+        $grps = $this->groups->getGrps("");
         return $this->view(
             'admin',
             [
-                'page' => 'category/list',
-                'cates' => $cate,
+                'page' => 'groups/list',
+                'grps' => $grps,
                 'thongbao' => $thongbao,
 
             ]

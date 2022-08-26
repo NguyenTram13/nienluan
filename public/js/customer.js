@@ -1,12 +1,6 @@
 window.addEventListener("load", function () {
-  const formProduct = document.querySelector(".form-product");
-  const inputSearchProduct = document.querySelector(".product-input");
-  const selectProduct = document.querySelector(".select-product");
-  const tableProduct = this.document.querySelector(".table-products");
   let loader = document.querySelectorAll(".loader");
-
   let keyword = JSON.parse(localStorage.getItem("kyw")) || "";
-  inputSearchProduct.value = keyword;
 
   function setLoading(selector) {
     setTimeout(() => {
@@ -18,40 +12,76 @@ window.addEventListener("load", function () {
       });
     }, 500);
   }
+  function searchInput(input, table, form) {
+    input?.addEventListener("keyup", function (e) {
+      localStorage.setItem("kyw", JSON.stringify(e.target.value));
+      setLoading(table);
+      setTimeout(() => {
+        form.submit();
+      }, 1500);
+    });
+  }
+  function formSunbmit(form, table) {
+    form?.addEventListener("submit", function (e) {
+      e.preventDefault();
+      loader.forEach((item) => {
+        console.log(item);
+        table.style.visibility = "hidden";
 
-  //loading product page begin
-  selectProduct.addEventListener("change", function (e) {
+        item.style.display = "block";
+      });
+      setTimeout(() => {
+        loader.forEach((item) => {
+          console.log(item);
+          table.style.visibility = "visible";
+
+          item.style.display = "none";
+        });
+      }, 1000);
+    });
+  }
+
+  //search cate
+  const formCates = document.querySelector(".form-cate");
+  const inputSearchCates = document.querySelector(".cate-input");
+  const tableCates = document.querySelector(".table-cate");
+  console.log(tableCates);
+  inputSearchCates ? (inputSearchCates.value = keyword) : "";
+
+  searchInput(inputSearchCates, tableCates, formCates);
+  formSunbmit(formCates, tableCates);
+
+  //end search cate
+  //loading Groups page begin
+  //product
+  const formProduct = document.querySelector(".form-product");
+  const inputSearchProduct = document.querySelector(".product-input");
+  const selectProduct = document.querySelector(".select-product");
+  const tableProduct = this.document.querySelector(".table-products");
+  inputSearchProduct ? (inputSearchProduct.value = keyword) : "";
+
+  //end product
+  selectProduct?.addEventListener("change", function (e) {
     localStorage.setItem("idSelect", JSON.stringify(e.target.value));
     setLoading(tableProduct);
     setTimeout(() => {
       formProduct.submit();
     }, 1500);
   });
+  searchInput(inputSearchProduct, tableProduct, formProduct);
+  formSunbmit(formProduct, tableProduct);
 
-  inputSearchProduct.addEventListener("keyup", function (e) {
-    localStorage.setItem("kyw", JSON.stringify(e.target.value));
-    setLoading(tableProduct);
-    setTimeout(() => {
-      formProduct.submit();
-    }, 1500);
-  });
-
-  formProduct.addEventListener("submit", function (e) {
-    e.preventDefault();
-    loader.forEach((item) => {
-      console.log(item);
-      tableProduct.style.visibility = "hidden";
-
-      item.style.display = "block";
-    });
-    setTimeout(() => {
-      loader.forEach((item) => {
-        console.log(item);
-        tableProduct.style.visibility = "visible";
-
-        item.style.display = "none";
-      });
-    }, 1000);
-  });
   //loading product page end
+
+  //search group
+  const formGroups = document.querySelector(".form-groups");
+  const inputSearchGroups = document.querySelector(".groups-input");
+  const tableGroups = document.querySelector(".table-groups");
+  console.log(tableGroups);
+
+  inputSearchGroups ? (inputSearchGroups.value = keyword) : "";
+  searchInput(inputSearchGroups, tableGroups, formGroups);
+  formSunbmit(formGroups, tableGroups);
+
+  //end search group
 });
