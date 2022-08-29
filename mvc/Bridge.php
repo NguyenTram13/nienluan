@@ -2,7 +2,11 @@
 define('_WEB_ROOT', 'http://' . $_SERVER['HTTP_HOST'] . '/QTDL-main');
 define('_PATH_ROOT_PUBLIC', _WEB_ROOT . '/public');
 define('_UPLOAD', $_SERVER["DOCUMENT_ROOT"] . '/QTDL-main/uploads');
-define('_PATH_UPLOAD_PRODUCT',_WEB_ROOT . '/uploads/product/');
+define('_PATH_UPLOAD_PRODUCT', _WEB_ROOT . '/uploads/product/');
+define('_PATH_UPLOAD_AVT', _WEB_ROOT . '/uploads/avt/');
+define('_PATH_UPLOAD_SLIDER', _WEB_ROOT . '/uploads/slider/');
+
+
 
 
 // Process URL from browser
