@@ -13,7 +13,7 @@
         <div class="row">
             <div class=" col-2">
                 <select class="form-select select-product" name="cate" aria-label="Default select example">
-                    <option value="0" <?php echo 0 === $data['idCateSelected'] ? "selected" : "" ?>>Chọn nhóm người dùng </option>
+                    <option value="0" <?php echo 0 === $data['idCateSelected'] ? "selected" : "" ?>>Chọn danh mục </option>
                     <?php
                     foreach ($data['Cates'] as $item) {
                         $selected =   $item['id'] == $data['idCateSelected'] ? "selected" : "";

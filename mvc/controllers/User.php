@@ -2,9 +2,11 @@
 class User extends Controller
 {
     private $use;
+    private $groups;
     public function __construct()
     {
-        $this->user = $this->model('UserModel');
+        $this->users = $this->model('UserModel');
+        $this->groups = $this->model('GroupModel');
     }
 
     public function login()
@@ -12,12 +14,12 @@ class User extends Controller
         if (isset($_POST['login']) && $_POST['login'] != "") {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $user = $this->user->getone_User($email);
+            $user = $this->users->getone_User($email);
             if (!empty($user)) {
                 if (password_verify($password, $user['password'])) {
                     $color = "success";
                     $_SESSION['check'] = 1;
-                    $_SESSION['msg'] = 'Đăng nhập thành công. Bạn có thể mua sản phẩm ngay bây giờ!';
+                    $_SESSION['msg'] = 'Đăng nhập thành công. Bạn có thể mua người dùng ngay bây giờ!';
                     header('Location: ' . _WEB_ROOT . '/home/index');
                 } else {
                     $thongbao = 'Password không đúng';
@@ -141,24 +143,24 @@ class User extends Controller
     function list()
     {
         $kyw = "";
-        $cate = 0;
+        $grps = 0;
 
         if (isset($_POST['kyw']) && $_POST['kyw'] != "") {
             $kyw = $_POST['kyw'];
         }
-        if (isset($_POST['cate']) && $_POST['cate'] != "") {
-            $cate = $_POST['cate'];
+        if (isset($_POST['grps']) && $_POST['grps'] != "") {
+            $grps = $_POST['grps'];
         }
-        $pros = $this->products->getPros($kyw, $cate);
-        $listCate = $this->cates->getCate("");
+        $users = $this->users->getUsers($kyw, $grps);
+        $listGrps = $this->groups->getGrps("");
 
         return $this->view(
             'admin',
             [
-                'page' => 'products/list',
-                'pros' => $pros,
-                'Cates' => $listCate,
-                'idCateSelected' => $cate
+                'page' => 'users/list',
+                'users' => $users,
+                'Grps' => $listGrps,
+                'idGrpsSelected' => $grps
 
             ]
         );
@@ -166,58 +168,56 @@ class User extends Controller
 
     function add()
     {
-        global $upload;
         if (isset($_POST['name']) && $_POST['name'] != "") {
             $name = $_POST['name'];
-            $cate = $_POST['cate'];
+            $groups = $_POST['grps'];
 
-            $price = $_POST['price'];
-            $describes = $_POST['describes'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $cfpassword = $_POST['cf-password'];
+
+            $address = $_POST['address'];
+            $tel = $_POST['tel'];
             $date = date('Y-m-d H:i:s');
 
-            $img = $_FILES['img']['name'];
-            $detaiImg = $_FILES['image_detail'];
-            for ($i = 0; $i < count($detaiImg['name']); $i++) {
-                $target_file = _UPLOAD . '/product/' .  basename($_FILES['image_detail']['name'][$i]);
-                if (move_uploaded_file($_FILES['image_detail']['tmp_name'][$i], $target_file)) {
+            $img = $_FILES['avt']['name'];
+            if ($password === $cfpassword) {
+                $password = password_hash($password, PASSWORD_DEFAULT);
+
+                $target_file = _UPLOAD . '/avt/' .  basename($_FILES['avt']['name']);
+                if (move_uploaded_file($_FILES['avt']['tmp_name'], $target_file)) {
                 } else {
                 }
-            }
-            $target_file = _UPLOAD . '/product/' .  basename($_FILES['img']['name']);
-            if (move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
+
+                $idUsers = $this->users->addUsers($name, $img, $email, $address, $password, $date, $tel, $groups);
+
+                if ($idUsers) {
+                    $thongbao = "Thêm người dùng thành công";
+                } else {
+                    $thongbao = "Thêm người dùng thất bại";
+                }
             } else {
+                $thongbao = "Mật khẩu không khớp";
             }
-
-            $idProduct = $this->products->addPros($name, $img, $price, $describes, $date, $cate);
-            foreach ($_FILES['image_detail']['name'] as $name) {
-
-                $this->products->addImageProduct($idProduct, $name, $date);
-            }
-            if ($idProduct) {
-                $thongbao = "Thêm sản phẩm thành công";
-            } else {
-                $thongbao = "Thêm sản phẩm thất bại";
-            }
-            $listCate = $this->cates->getCate();
-
+            $listGrps = $this->groups->getGrps("");
             return $this->view(
                 'admin',
                 [
-                    'page' => 'products/add',
+                    'page' => 'users/add',
 
                     'thongbao' => $thongbao,
-                    'Cates' => $listCate,
+                    'Grps' => $listGrps,
 
-                ]
+                ],
             );
         } else {
-            $listCate = $this->cates->getCate("");
+            $listGrps = $this->groups->getGrps("");
 
             return $this->view(
                 'admin',
                 [
-                    'page' => 'products/add',
-                    'Cates' => $listCate,
+                    'page' => 'users/add',
+                    'Grps' => $listGrps,
 
                 ]
             );
@@ -227,75 +227,68 @@ class User extends Controller
     function edit($id)
     {
         if (isset($_POST['name']) && $_POST['name'] != "") {
+            $name = $_POST['name'];
+            $groups = $_POST['groups'];
+
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $cfpassword = $_POST['cf-password'];
+
+            $address = $_POST['address'];
+            $tel = $_POST['tel'];
             $date = date('Y-m-d H:i:s');
-            $cate = $_POST['cate'];
 
-            $price = $_POST['price'];
-            $describes = $_POST['describes'];
-
-            $detaiImg = $_FILES['image_detail'];
-            if (!empty($detaiImg['name'][0])) {
-
-                for ($i = 0; $i < count($detaiImg['name']); $i++) {
-                    $target_file = _UPLOAD . '/product/' .  basename($_FILES['image_detail']['name'][$i]);
-                    if (move_uploaded_file($_FILES['image_detail']['tmp_name'][$i], $target_file)) {
-                    } else {
-                    }
-                }
-
-
-                $this->products->deleteImgPros($id);
-                foreach ($_FILES['image_detail']['name'] as $name) {
-
-                    $this->products->addImageProduct($id, $name, $date);
-                }
+            $img = $_FILES['avt']['name'];
+            if (!empty($password) && $password === $cfpassword) {
+                $password = password_hash($password, PASSWORD_DEFAULT);
             }
-            $img = $_FILES['img']['name'];
             if (!empty($img)) {
 
-                $target_file = _UPLOAD . '/product/' .  basename($_FILES['img']['name']);
-                if (move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
+                $target_file = _UPLOAD . '/avt/' .  basename($_FILES['avt']['name']);
+                if (move_uploaded_file($_FILES['avt']['tmp_name'], $target_file)) {
                 } else {
                 }
             }
-            $name = $_POST['name'];
-            $edit = $this->products->editPros($id, $name, $img, $price, $describes, $date, $cate);
+            // $name = $_POST['name'];
+            $edit = $this->users->editUser($id, $name, $img, $email, $address, $password, $date, $tel, $groups);
+            // echo "<pre>";
+            // print_r($edit);
             if ($edit) {
-                $thongbao = "Sửa sản phẩm thành công";
+                $thongbao = "Sửa người dùng thành công";
             } else {
-                $thongbao = "Sửa sản phẩm thất bại";
+                $thongbao = "Sửa người dùng thất bại";
             }
-            $onepros = $this->products->getone_Pros($id);
-            $listCate = $this->cates->getCate();
-            $imgDetail = $this->products->getImgDetail($id);
+            $oneUsers = $this->users->getone_UserID($id);
+            $listGrps = $this->groups->getGrps("");
+            // $imgDetail = $this->users->getImgDetail($id);
 
 
             return $this->view(
                 'admin',
                 [
-                    'page' => 'products/edit',
+                    'page' => 'users/edit',
 
                     'thongbao' => $thongbao,
-                    'pros' => $onepros,
-                    'Cates' => $listCate,
-                    'imgDetail' => $imgDetail,
+                    'users' => $oneUsers,
+                    'Grps' => $listGrps,
+
 
                 ]
             );
         } else {
-            $onepros = $this->products->getone_Pros($id);
-            $imgDetail = $this->products->getImgDetail($id);
-            // print_r($imgDetail);
-            // die();
-            $listCate = $this->cates->getCate();
+            $oneUsers = $this->users->getone_UserID($id);
+
+
+            $listGrps = $this->groups->getGrps("");
 
             return $this->view(
                 'admin',
                 [
-                    'page' => 'products/edit',
-                    'pros' => $onepros,
-                    'Cates' => $listCate,
-                    'imgDetail' => $imgDetail,
+                    'page' => 'users/edit',
+                    'users' => $oneUsers,
+
+                    'Grps' => $listGrps,
+
                 ]
             );
         }
@@ -303,22 +296,14 @@ class User extends Controller
     function delete($id)
     {
 
-        $del = $this->products->deletePros($id);
-        $delImg = $this->products->deleteImgPros($id);
+        $del = $this->users->deleteUsers($id);
+        // $delImg = $this->users->deleteImgPros($id);
         if ($del) {
-            $thongbao = "Xóa sản phẩm thành công";
+            $_SESSION['msg'] = "Xóa người dùng thành công!";
+            header("Location: " . _WEB_ROOT . "/users/list");
         } else {
-            $thongbao = "Xóa sản phẩm thất bại";
+            $_SESSION['msg'] = "Xóa người dùng thất bại!";
+            header("Location: " . _WEB_ROOT . "/users/list");
         }
-        $pros = $this->products->getPros();
-        return $this->view(
-            'admin',
-            [
-                'page' => 'products/list',
-                'pros' => $pros,
-                'thongbao' => $thongbao,
-
-            ]
-        );
     }
 }
