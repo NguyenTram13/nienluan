@@ -3,12 +3,13 @@ class SliderModel extends DB
 {
     function getSlider($kyw)
     {
+        $sql = "SELECT * FROM slider WHERE 1";
         if ($kyw != "") {
-            $sql = "SELECT * FROM slider WHERE name like '%" . $kyw . "%' order by id desc";
-        } else {
-
-            $sql = "SELECT * FROM slider order by id desc";
+            $sql .= " AND title like '%" . $kyw . "%'";
+            $sql .= " OR caption like '%" . $kyw . "%'";
         }
+
+        $sql .= " order by id desc";
         return $this->pdo_query($sql);
     }
     function getone_Slider($id)
@@ -24,9 +25,14 @@ class SliderModel extends DB
         }
         return false;
     }
-    function editSlider($id, $name, $date)
+    function editSlider($id, $caption, $img, $title, $date)
     {
-        $sql = "UPDATE slider SET name='$name', updated_at='$date' Where id='$id' ";
+        if (!empty($img)) {
+            $sql = "UPDATE slider SET caption='$caption', img='$img', title='$title', updated_at='$date' Where id='$id' ";
+        } else {
+            $sql = "UPDATE slider SET caption='$caption', title='$title', updated_at='$date' Where id='$id' ";
+        }
+
 
         return $this->pdo_execute($sql);
     }

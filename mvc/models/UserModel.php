@@ -27,7 +27,8 @@ class UserModel extends DB
     {
         $sql = "SELECT * FROM users WHERE 1";
         if ($kyw != "") {
-            $sql .= " AND name like '%" . $kyw . "%'";
+            $sql .= " AND fullname like '%" . $kyw . "%'";
+            $sql .= " OR email like '%" . $kyw . "%'";
         }
         if ($Groups != 0) {
             $sql .= " AND idGroups  = '$Groups'";

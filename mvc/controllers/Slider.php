@@ -73,36 +73,46 @@ class Slider extends Controller
 
     function edit($id)
     {
-        if (isset($_POST['name']) && $_POST['name'] != "") {
+        if (isset($_POST['caption']) && $_POST['caption'] != "") {
+            $caption = $_POST['caption'];
+            $title = $_POST['title'];
             $date = date('Y-m-d H:i:s');
 
-            $name = $_POST['name'];
-            $edit = $this->slider->editSlider($id, $name, $date);
-            if ($edit) {
-                $thongbao = "Sửa nhóm người dùng thành công";
+            $img = $_FILES['img']['name'];
+            $target_file = _UPLOAD . '/slider/' .  basename($_FILES['img']['name']);
+            if (move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
             } else {
-                $thongbao = "Sửa nhóm người dùng thất bại";
             }
-            $oneGrps = $this->slider->getone_Slider($id);
+            $edit = $this->slider->editSlider($id, $caption, $img, $title, $date);
+
+            if ($edit) {
+                $thongbao = "Sửa slider thành công";
+            } else {
+                $thongbao = "Sửa slider thất bại";
+            }
+
+            $oneSlider = $this->slider->getone_Slider($id);
             return $this->view(
                 'admin',
                 [
                     'page' => 'slider/edit',
 
                     'thongbao' => $thongbao,
-                    'slider' => $oneGrps,
+                    'slider' => $oneSlider,
+
 
                 ]
             );
         } else {
-            $oneGrps = $this->slider->getone_Slider($id);
 
+            $oneSlider = $this->slider->getone_Slider($id);
 
             return $this->view(
                 'admin',
                 [
                     'page' => 'slider/edit',
-                    'slider' => $oneGrps,
+                    'slider' => $oneSlider,
+
 
                 ]
             );

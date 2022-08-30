@@ -246,6 +246,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <p>Slider</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="<?php echo _WEB_ROOT . '/menu/list' ?>" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Menu</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="<?php echo _WEB_ROOT . '/setting/list' ?>" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Setting</p>
+                  </a>
+                </li>
               </ul>
             </li>
 
