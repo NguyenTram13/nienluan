@@ -15,10 +15,10 @@
     <p class="d-block text-end ">
         <a href="<?php echo _WEB_ROOT . '/users/add' ?>" class="px-5 btn btn-primary">Add</a>
     </p>
-    <form method="POST" action="" class="form-user">
+    <form method="POST" action="" class="form-users">
         <div class="row">
             <div class=" col-3">
-                <select class="form-select select-groups" name="grps" aria-label="Default select example">
+                <select class="form-select select-users" name="grps" aria-label="Default select example">
                     <option value="0" <?php echo 0 === $data['idGrpsSelected'] ? "selected" : "" ?>>Chọn nhóm người dùng </option>
                     <?php
                     foreach ($data['Grps'] as $item) {
@@ -34,7 +34,7 @@
             </div>
             <div class=" d-flex gap-2 mb-3 col-9">
 
-                <input type="text" name="kyw" class="user-input form-control " placeholder="Search...">
+                <input type="text" name="kyw" class="users-input form-control " placeholder="Search...">
                 <button type="submit" class="btn btn-primary px-4">Search</button>
             </div>
         </div>

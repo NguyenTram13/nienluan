@@ -84,4 +84,47 @@ window.addEventListener("load", function () {
   formSunbmit(formGroups, tableGroups);
 
   //end search group
+
+  //search users
+  const formUsers = document.querySelector(".form-users");
+  const inputSearchUsers = document.querySelector(".users-input");
+  const tableUsers = document.querySelector(".table-users");
+  const selectUsers = document.querySelector(".select-users");
+  console.log(inputSearchUsers);
+
+  inputSearchUsers ? (inputSearchUsers.value = keyword) : "";
+  selectUsers?.addEventListener("change", function (e) {
+    localStorage.setItem("idSelect", JSON.stringify(e.target.value));
+    setLoading(tableUsers);
+    setTimeout(() => {
+      formUsers.submit();
+    }, 1500);
+  });
+  searchInput(inputSearchUsers, tableUsers, formUsers);
+  formSunbmit(formUsers, tableUsers);
+
+  //end search users
+  //search slider
+  const formSlider = document.querySelector(".form-slider");
+  const inputSearchSlider = document.querySelector(".slider-input");
+  const tableSlider = document.querySelector(".table-slider");
+  console.log(tableGroups);
+
+  inputSearchSlider ? (inputSearchSlider.value = keyword) : "";
+  searchInput(inputSearchSlider, tableSlider, formSlider);
+  formSunbmit(formSlider, tableSlider);
+
+  //end search slider
+
+  //search menu
+  const formMenu = document.querySelector(".form-menu");
+  const inputSearchMenu = document.querySelector(".menu-input");
+  const tableMenu = document.querySelector(".table-menu");
+  console.log(tableGroups);
+
+  inputSearchMenu ? (inputSearchMenu.value = keyword) : "";
+  searchInput(inputSearchMenu, tableMenu, formMenu);
+  formSunbmit(formMenu, tableMenu);
+
+  //end search menu
 });
