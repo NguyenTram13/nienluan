@@ -3,7 +3,7 @@
 
 class Slider extends Controller
 {
-
+    private $slider;
     function __construct()
     {
         $this->slider = $this->model('SliderModel');

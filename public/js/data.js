@@ -74,9 +74,7 @@ const product = [
 ];
 function createitem(item, number = 0) {
   let template = `
-    <div class="col-xs-12 col-sm-6 col-lg-${
-      number > 0 ? 12 / number : 4
-    } new-arrival-item data-id="${item.id}">
+    <div class="col-xs-12 col-sm-6 col-lg-3 new-arrival-item data-id="${item.id}">
         <div class="new-arrival-img">
            <img src="${item.img}">
             <div class="new-arrival-other">

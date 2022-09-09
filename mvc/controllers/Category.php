@@ -3,7 +3,7 @@
 
 class Category extends Controller
 {
-
+    private $category;
     function __construct()
     {
         $this->category = $this->model('CategoryModel');

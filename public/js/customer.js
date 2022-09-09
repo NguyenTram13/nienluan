@@ -127,4 +127,16 @@ window.addEventListener("load", function () {
   formSunbmit(formMenu, tableMenu);
 
   //end search menu
+
+  //search setting
+  const formSetting = document.querySelector(".form-setting");
+  const inputSearchSetting = document.querySelector(".setting-input");
+  const tableSetting = document.querySelector(".table-setting");
+  console.log(inputSearchSetting);
+
+  inputSearchSetting ? (inputSearchSetting.value = keyword) : "";
+  searchInput(inputSearchSetting, tableSetting, formSetting);
+  formSunbmit(formSetting, tableSetting);
+
+  //end search setting
 });

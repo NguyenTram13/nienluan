@@ -1,12 +1,12 @@
 <?php
 
 
-class Menu extends Controller
+class Setting extends Controller
 {
-
+    private $setting;
     function __construct()
     {
-        $this->menu = $this->model('MenuModel');
+        $this->setting = $this->model('SettingModel');
     }
     function list()
     {
@@ -14,12 +14,12 @@ class Menu extends Controller
         if (isset($_POST['kyw']) && $_POST['kyw'] != "") {
             $kyw = $_POST['kyw'];
         }
-        $menu = $this->menu->getMenu($kyw);
+        $setting = $this->setting->getSetting($kyw);
         return $this->view(
             'admin',
             [
-                'page' => 'menu/list',
-                'menu' => $menu,
+                'page' => 'setting/list',
+                'setting' => $setting,
 
 
             ]
@@ -28,19 +28,21 @@ class Menu extends Controller
 
     function add()
     {
-        if (isset($_POST['name']) && $_POST['name'] != "") {
-            $name = $_POST['name'];
+        if (isset($_POST['config_key']) && $_POST['config_key'] != "") {
+            $confgKey = $_POST['config_key'];
+            $configValue = $_POST['config_value'];
+            echo $configValue;
             $date = date('Y-m-d H:i:s');
-            $add = $this->menu->addMenu($name, $date);
+            $add = $this->setting->addSetting($confgKey, $configValue, $date);
             if ($add) {
-                $thongbao = "Thêm menu thành công";
+                $thongbao = "Thêm setting thành công";
             } else {
-                $thongbao = "Thêm menu thất bại";
+                $thongbao = "Thêm setting thất bại";
             }
             return $this->view(
                 'admin',
                 [
-                    'page' => 'menu/add',
+                    'page' => 'setting/add',
 
                     'thongbao' => $thongbao
 
@@ -50,46 +52,126 @@ class Menu extends Controller
             return $this->view(
                 'admin',
                 [
-                    'page' => 'menu/add',
+                    'page' => 'setting/add',
 
 
                 ]
             );
         }
     }
-
-    function edit($id)
+    function addfile()
     {
-        if (isset($_POST['name']) && $_POST['name'] != "") {
-            $date = date('Y-m-d H:i:s');
-
-            $name = $_POST['name'];
-            $edit = $this->menu->editMenu($id, $name, $date);
-            if ($edit) {
-                $thongbao = "Sửa menu thành công";
+        if (isset($_POST['config_key']) && $_POST['config_key'] != "") {
+            $confgKey = $_POST['config_key'];
+            $configValue = $_FILES['config_value']['name'];
+            $target_file = _UPLOAD . '/setting/' .  basename($_FILES['config_value']['name']);
+            if (move_uploaded_file($_FILES['config_value']['tmp_name'], $target_file)) {
             } else {
-                $thongbao = "Sửa menu thất bại";
             }
-            $oneMenu = $this->menu->getone_Menu($id);
+
+            $date = date('Y-m-d H:i:s');
+            $addfile = $this->setting->addSetting($confgKey, $configValue, $date);
+            if ($addfile) {
+                $thongbao = "Thêm setting thành công";
+            } else {
+                $thongbao = "Thêm setting thất bại";
+            }
             return $this->view(
                 'admin',
                 [
-                    'page' => 'menu/edit',
+                    'page' => 'setting/addfile',
 
-                    'thongbao' => $thongbao,
-                    'menu' => $oneMenu,
+                    'thongbao' => $thongbao
 
                 ]
             );
         } else {
-            $oneMenu = $this->menu->getone_Menu($id);
+            return $this->view(
+                'admin',
+                [
+                    'page' => 'setting/addfile',
+
+
+                ]
+            );
+        }
+    }
+    function edit($id)
+    {
+        if (isset($_POST['config_key']) && $_POST['config_key'] != "") {
+            $confgKey = $_POST['config_key'];
+            $configValue = $_POST['config_value'];
+            echo $configValue;
+            $date = date('Y-m-d H:i:s');
+            $edit = $this->setting->editSetting($id, $confgKey, $configValue, $date);
+            if ($edit) {
+                $thongbao = "Sửa setting thành công";
+            } else {
+                $thongbao = "Sửa setting thất bại";
+            }
+            $oneSetting = $this->setting->getone_Setting($id);
+            return $this->view(
+                'admin',
+                [
+                    'page' => 'setting/edit',
+
+                    'thongbao' => $thongbao,
+                    'setting' => $oneSetting,
+
+                ]
+            );
+        } else {
+            $oneSetting = $this->setting->getone_Setting($id);
 
 
             return $this->view(
                 'admin',
                 [
-                    'page' => 'menu/edit',
-                    'menu' => $oneMenu,
+                    'page' => 'setting/edit',
+                    'setting' => $oneSetting,
+
+                ]
+            );
+        }
+    }
+    function editFile($id)
+    {
+        if (isset($_POST['config_key']) && $_POST['config_key'] != "") {
+            $confgKey = $_POST['config_key'];
+            $configValue = $_FILES['config_value']['name'];
+
+            $target_file = _UPLOAD . '/setting/' .  basename($_FILES['config_value']['name']);
+            if (move_uploaded_file($_FILES['config_value']['tmp_name'], $target_file)) {
+            } else {
+            }
+            $date = date('Y-m-d H:i:s');
+
+            $edit = $this->setting->editSetting($id, $confgKey, $configValue, $date);
+            if ($edit) {
+                $thongbao = "Sửa setting thành công";
+            } else {
+                $thongbao = "Sửa setting thất bại";
+            }
+            $oneSetting = $this->setting->getone_Setting($id);
+            return $this->view(
+                'admin',
+                [
+                    'page' => 'setting/editFile',
+
+                    'thongbao' => $thongbao,
+                    'setting' => $oneSetting,
+
+                ]
+            );
+        } else {
+            $oneSetting = $this->setting->getone_Setting($id);
+
+
+            return $this->view(
+                'admin',
+                [
+                    'page' => 'setting/editFile',
+                    'setting' => $oneSetting,
 
                 ]
             );
@@ -98,13 +180,13 @@ class Menu extends Controller
     function delete($id)
     {
 
-        $del = $this->menu->deleteMenu($id);
+        $del = $this->setting->deleteSetting($id);
         if ($del) {
-            $_SESSION['msg'] = "Xóa menu thành công!";
-            header("Location: " . _WEB_ROOT . "/menu/list");
+            $_SESSION['msg'] = "Xóa setting thành công!";
+            header("Location: " . _WEB_ROOT . "/setting/list");
         } else {
-            $_SESSION['msg'] = "Xóa menu thất bại!";
-            header("Location: " . _WEB_ROOT . "/menu/list");
+            $_SESSION['msg'] = "Xóa setting thất bại!";
+            header("Location: " . _WEB_ROOT . "/setting/list");
         }
     }
 }

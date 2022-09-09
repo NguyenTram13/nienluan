@@ -267,7 +267,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </div>
       <!-- /.sidebar -->
     </aside>
-    <div class="content-wrapper">
+    <div class="content-wrapper ">
 
       <?php
       require_once './mvc/views/pages/admin/' . $data['page'] . '.php';

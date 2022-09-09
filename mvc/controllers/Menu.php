@@ -3,7 +3,7 @@
 
 class Menu extends Controller
 {
-
+    private $menu;
     function __construct()
     {
         $this->menu = $this->model('MenuModel');

@@ -5,6 +5,8 @@ define('_UPLOAD', $_SERVER["DOCUMENT_ROOT"] . '/QTDL-main/uploads');
 define('_PATH_UPLOAD_PRODUCT', _WEB_ROOT . '/uploads/product/');
 define('_PATH_UPLOAD_AVT', _WEB_ROOT . '/uploads/avt/');
 define('_PATH_UPLOAD_SLIDER', _WEB_ROOT . '/uploads/slider/');
+define('_PATH_UPLOAD_SETTING', _WEB_ROOT . '/uploads/setting/');
+
 
 
 

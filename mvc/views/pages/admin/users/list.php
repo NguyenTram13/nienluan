@@ -1,5 +1,4 @@
-<a href=""></a>
-<div class="container pt-3" data-aos="fade-right">
+<div class="container mx-auto pt-3" data-aos="fade-right">
     <?php
     if (isset($data['thongbao']) && $data['thongbao'] != "") {
         echo  '<div class="alert alert-success text-center">' . $data['thongbao'] . '</div>';
@@ -16,6 +15,7 @@
         <a href="<?php echo _WEB_ROOT . '/users/add' ?>" class="px-5 btn btn-primary">Add</a>
     </p>
     <form method="POST" action="" class="form-users">
+
         <div class="row">
             <div class=" col-3">
                 <select class="form-select select-users" name="grps" aria-label="Default select example">
@@ -38,6 +38,7 @@
                 <button type="submit" class="btn btn-primary px-4">Search</button>
             </div>
         </div>
+
     </form>
     <div class="text-center d-flex justify-content-center">
 

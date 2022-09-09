@@ -67,6 +67,22 @@ class ProductModel extends DB
             $sql .= " AND idCate  = '$cate'";
         }
         $sql .= " order by id desc";
+        return
+
+            $this->pdo_query($sql);
+    }
+    function getProsNew()
+    {
+        $sql = "SELECT * FROM products WHERE 1";
+
+        $sql .= " order by created_at desc LIMIT 4";
+        return $this->pdo_query($sql);
+    }
+    function getProsfeatured()
+    {
+        $sql = "SELECT * FROM products WHERE 1";
+
+        $sql .= " order by views desc LIMIT 4";
         return $this->pdo_query($sql);
     }
 }
