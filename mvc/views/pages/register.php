@@ -8,7 +8,7 @@
         }
 
         ?>
-        <form action="<?php echo _WEB_ROOT . '/user/register' ?>" method="post" class="form-register">
+        <form action="<?php echo _WEB_ROOT . '/user/register' ?>" method="post" class="form-register" autocomplete="off">
             <div class="main-register-item">
                 <div class="main-register-item-content">
                     <span>Họ và tên</span>
@@ -61,10 +61,10 @@
             <button class="main-register-btn" type="submit">Đăng ký</button>
         </form>
         <div class="footer-form">
-            <a class="main-register-return" href="./login.html">
+            <a class="main-register-return" href="<?php echo _WEB_ROOT . '/user/login' ?>">
                 <p>Đăng nhập</p>
             </a>
-            <a class="main-register-return" href="./index.html">
+            <a class="main-register-return" href="<?php echo _WEB_ROOT . '/user/index' ?>">
                 <p>Quay về cửa hàng</p>
             </a>
         </div>

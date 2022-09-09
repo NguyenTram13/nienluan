@@ -1,38 +1,43 @@
 <?php
-class MenuModel extends DB
+class SettingModel extends DB
 {
-    function getMenu($kyw)
+    function getSetting($kyw)
     {
+        $sql = "SELECT * FROM setting WHERE 1";
         if ($kyw != "") {
-            $sql = "SELECT * FROM menu WHERE name like '%" . $kyw . "%' order by id desc";
-        } else {
-
-            $sql = "SELECT * FROM menu order by id desc";
+            $sql .= " AND config_key like '%" . $kyw . "%'";
         }
+        $sql .= " order by id desc";
         return $this->pdo_query($sql);
     }
-    function getone_Menu($id)
+    function getone_Setting($id)
     {
-        $sql = "SELECT * FROM menu where id='$id'";
+        $sql = "SELECT * FROM setting where id='$id'";
         return $this->pdo_query_one($sql);
     }
-    function addMenu($name, $create)
+    function addSetting($configKey, $configValue, $create)
     {
-        $sql = "INSERT INTO menu(name, created_at) values('$name', '$create')";
+        $sql = "INSERT INTO setting(config_key, config_value, created_at) values('$configKey','$configValue', '$create')";
         if ($this->pdo_execute($sql)) {
             return true;
         }
         return false;
     }
-    function editMenu($id, $name, $date)
+    function editSetting($id, $configKey, $configValue, $date)
+
     {
-        $sql = "UPDATE menu SET name='$name', updated_at='$date' Where id='$id' ";
+        if (!empty($configValue)) {
+
+            $sql = "UPDATE setting SET config_key='$configKey', config_value='$configValue', updated_at='$date' Where id='$id' ";
+        } else {
+            $sql = "UPDATE setting SET config_key='$configKey', updated_at='$date' Where id='$id' ";
+        }
 
         return $this->pdo_execute($sql);
     }
-    function deleteMenu($id)
+    function deleteSetting($id)
     {
-        $sql = "DELETE FROM menu WHERE id='$id'";
+        $sql = "DELETE FROM setting WHERE id='$id'";
         return  $this->pdo_execute($sql);
     }
 }

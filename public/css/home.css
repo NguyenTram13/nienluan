@@ -1233,10 +1233,10 @@ img {
   position: relative;
 }
 .main-product .new-arrival-list .row .new-arrival-item .new-arrival-img img {
-  transition: all 1s linear;
+  transition: all 0.5s linear;
 }
 .main-product .new-arrival-list .row .new-arrival-item .new-arrival-img:hover img {
-  transform: scale(1.8);
+  transform: scale(1.2);
 }
 .main-product .new-arrival-list .row .new-arrival-item .new-arrival-img:hover .new-arrival-other {
   visibility: visible;
@@ -1245,7 +1245,7 @@ img {
 .main-product .new-arrival-list .row .new-arrival-item .new-arrival-img .new-arrival-other {
   visibility: hidden;
   opacity: 0;
-  transition: all 0.25s linear;
+  transition: all 0.2s linear;
 }
 .main-product .new-arrival-list .row .new-arrival-item .new-arrival-img .new-arrival-other .other-icon {
   position: absolute;

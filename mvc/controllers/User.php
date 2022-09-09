@@ -1,7 +1,7 @@
 <?php
 class User extends Controller
 {
-    private $use;
+    private $users;
     private $groups;
     public function __construct()
     {
@@ -19,6 +19,7 @@ class User extends Controller
                 if (password_verify($password, $user['password'])) {
                     $color = "success";
                     $_SESSION['check'] = 1;
+                    $_SESSION['user'] = $user;
                     $_SESSION['msg'] = 'Đăng nhập thành công. Bạn có thể mua người dùng ngay bây giờ!';
                     header('Location: ' . _WEB_ROOT . '/home/index');
                 } else {

@@ -8,7 +8,7 @@
         unset($data['thongbao']);
     }
     ?>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <div class="row mb-3">
             <label for="" class="col-sm-12  col-form-label">Config Key</label>
             <div class="col-sm-12">
@@ -18,7 +18,7 @@
         <div class="row mb-3">
             <label for="" class="col-sm-12  col-form-label">Config value</label>
             <div class="col-sm-12">
-                <input type="text" required name="config_value" class="form-control" id="config_value">
+                <input type="file" required name="config_value" class="form-control" id="config_value">
             </div>
         </div>
 

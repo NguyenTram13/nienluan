@@ -3,7 +3,7 @@
 
 class Groups extends Controller
 {
-
+    private $groups;
     function __construct()
     {
         $this->groups = $this->model('GroupModel');

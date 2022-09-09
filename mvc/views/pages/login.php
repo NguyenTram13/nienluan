@@ -12,7 +12,7 @@
             unset($data['thongbao']);
         }
         ?>
-        <form action="<?php echo _WEB_ROOT . '/user/login' ?>" method="post" class="form-login">
+        <form action="<?php echo _WEB_ROOT . '/user/login' ?>" method="post" class="form-login" autocomplete="off">
             <div class="main-login-item">
                 <div class="main-login-item-content">
                     <span>Email</span>
@@ -37,7 +37,7 @@
             <a class="main-login-return" href="<?php echo _WEB_ROOT . '/user/register' ?>">
                 <p>Đăng ký</p>
             </a>
-            <a class="main-login-return" href="./index.html">
+            <a class="main-login-return" href="<?php echo _WEB_ROOT . '/user/index' ?>">
                 <p>Quay về cửa hàng</p>
             </a>
         </div>

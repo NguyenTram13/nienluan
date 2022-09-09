@@ -30,16 +30,20 @@
             <div class="header-content">
                 <div class="header-logo">
                     <a href="index.html">
-                        <img src="<?php echo _PATH_ROOT_PUBLIC . '/img/logo/cropped-site_logo_276x106.png' ?>" alt="" class="logo" />
+                        <img src="<?php echo _PATH_UPLOAD_SETTING . $data['settings'][0]['config_value'] ?>" alt="" class="logo" />
                     </a>
                 </div>
                 <div class="header-link">
                     <ul class="header-link-item">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="shop.html">Shop</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
+                        <?php
+                        foreach ($data['menus'] as $menu) {
+                            echo '
+                            <li><a href="' . _WEB_ROOT . '/' . $menu["name"] . '">' . $menu["name"] . '</a></li>
+                            
+                            ';
+                        }
+                        ?>
+
                     </ul>
                 </div>
                 <div class="header-icon">
@@ -58,10 +62,28 @@
                         <a href=""> <i class="fa-solid fa-user"></i></a>
                         <ul class="account">
                             <li><a href="user.html">User</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="<?php  echo _WEB_ROOT.'/admin/index'
-                            ?>">Admin</a></li>
+                            <?php
+
+
+                            if (!isset($_SESSION['user'])) {
+                            ?>
+
+                                <li><a href="register.html">Register</a></li>
+                                <li><a href="login.html">Login</a></li>
+                            <?php
+                            }
+                            ?>
+                            <?php
+
+
+                            if (isset($_SESSION['user']) && $_SESSION['user']['idGroups'] == 1) {
+                            ?>
+                                <li><a href="<?php echo _WEB_ROOT . '/admin/index'
+                                                ?>">Admin</a></li>
+                            <?php
+                            }
+                            ?>
+                            <li><a href="user.html">Logout</a></li>
 
                         </ul>
                     </div>
@@ -78,30 +100,30 @@
         ?>
         <div class="footer">
             <?php
-                
-                if(isset($_SESSION['check']) && $_SESSION['check']==1){
-                    ?>
-                    <div class="footer-top">
-                        <div class="footer-top-content">
-                            <div class="footer-img" data-aos="fade-up" data-aos-duration="1000">
-                                <img src="<?php echo _PATH_ROOT_PUBLIC . '/img/tea/teapot.png' ?>" alt="" />
-                            </div>
-                            <div class="footer-text" data-aos="fade-up" data-aos-duration="2000">
-                                <span> Subscribe to Newsletter</span>
-                            </div>
-                            <div class="footer-input" data-aos="fade-up" data-aos-duration="3000">
-                                <input type="text" placeholder="Email address here..." />
-                                <button type="submit" class="subscribe">
-                                    subscribe <i class="fa-solid fa-arrow-right-long"></i>
-                                </button>
-                            </div>
-                        </div>
-                     </div>
 
-                    <?php
-                }
+            if (isset($_SESSION['check']) && $_SESSION['check'] == 1) {
             ?>
-           
+                <div class="footer-top">
+                    <div class="footer-top-content">
+                        <div class="footer-img" data-aos="fade-up" data-aos-duration="1000">
+                            <img src="<?php echo _PATH_ROOT_PUBLIC . '/img/tea/teapot.png' ?>" alt="" />
+                        </div>
+                        <div class="footer-text" data-aos="fade-up" data-aos-duration="2000">
+                            <span> Subscribe to Newsletter</span>
+                        </div>
+                        <div class="footer-input" data-aos="fade-up" data-aos-duration="3000">
+                            <input type="text" placeholder="Email address here..." />
+                            <button type="submit" class="subscribe">
+                                subscribe <i class="fa-solid fa-arrow-right-long"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            <?php
+            }
+            ?>
+
             <div class="footer-bottom">
                 <div class="footer-bottom-content container">
                     <div class="row">
@@ -149,10 +171,34 @@
                                 <span>Phone: 987.654.3210</span>
                             </div>
                             <div class="footer-right-link">
+
                                 <div class="row">
-                                    <a class="col col-4 fb"><i class="fa-brands fa-facebook-f"></i></a>
-                                    <a class="col col-4 tw"><i class="fa-brands fa-twitter"></i></a>
-                                    <a class="col col-4 in"><i class="fa-brands fa-linkedin-in"></i></a>
+                                    <?php
+                                    foreach ($data['settings'] as $setting) {
+                                        // if ($setting['config_key'] !== 'Logo') {
+                                        //     continue;
+                                        // }
+                                        if ($setting['config_key'] === 'Facebook') {
+                                            echo '
+                                            <a href="' . $setting['config_value'] . '" class="col col-4 fb"><i class="fa-brands fa-facebook-f"></i></a>
+                                            
+                                            ';
+                                        }
+                                        if ($setting['config_key'] === 'Twitter') {
+                                            echo '
+                                            <a href="' . $setting['config_value'] . '" class="col col-4 tw"><i class="fa-brands fa-twitter"></i></a>
+                                            
+                                            ';
+                                        }
+                                        if ($setting['config_key'] === 'Instagram') {
+                                            echo '
+                                            <a href="' . $setting['config_value'] . '" class="col col-4 in"><i class="fa-brands fa-instagram"></i></a>
+                                            
+                                            ';
+                                        }
+                                    }
+                                    ?>
+
                                 </div>
                             </div>
                         </div>

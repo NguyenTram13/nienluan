@@ -4,10 +4,10 @@ class MenuModel extends DB
     function getMenu($kyw)
     {
         if ($kyw != "") {
-            $sql = "SELECT * FROM menu WHERE name like '%" . $kyw . "%' order by id desc";
+            $sql = "SELECT * FROM menu WHERE name like '%" . $kyw . "%' order by created_at asc";
         } else {
 
-            $sql = "SELECT * FROM menu order by id desc";
+            $sql = "SELECT * FROM menu order by  created_at asc";
         }
         return $this->pdo_query($sql);
     }
