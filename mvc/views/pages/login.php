@@ -5,14 +5,14 @@
         <?php
         if (isset($_SESSION['msg']) && $_SESSION['msg'] != "") {
             echo  '<div class="alert alert-success">' . $_SESSION['msg'] . '</div>';
-            unset($_SESSION['msg']);
+            $_SESSION['msg'] = '';
         }
         if (isset($data['thongbao']) && $data['thongbao'] != "") {
             echo  '<div class="alert alert-danger">' . $data['thongbao'] . '</div>';
-            unset($data['thongbao']);
+            $data['thongbao'] = '';
         }
         ?>
-        <form action="<?php echo _WEB_ROOT . '/user/login' ?>" method="post" class="form-login" autocomplete="off">
+        <form action="<?php echo _WEB_ROOT . '/user' ?>" method="post" class="form-login" autocomplete="off">
             <div class="main-login-item">
                 <div class="main-login-item-content">
                     <span>Email</span>

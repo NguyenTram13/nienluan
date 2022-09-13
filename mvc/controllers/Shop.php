@@ -1,6 +1,7 @@
 <?php
-class Home extends Controller
+class Shop extends Controller
 {
+    private $category;
     private $setting;
     private $menu;
     private $slider;
@@ -12,19 +13,23 @@ class Home extends Controller
         $this->setting = $this->model("SettingModel");
         $this->menu = $this->model("MenuModel");
         $this->slider = $this->model("SliderModel");
+        $this->category = $this->model("CategoryModel");
         $this->product = $this->model("ProductModel");
     }
     public function index()
     {
+
+
+        $cates = $this->category->getCate("");
         $settings = $this->setting->getSetting("");
         $menus = $this->menu->getMenu("");
         $sliders = $this->slider->getSlider("");
-        $productNews = $this->product->getProsNew();
-        $productFeatureds = $this->product->getProsfeatured();
+        $products = $this->product->getPros("");
         return $this->view('client', [
-            'page' => 'index',
+            'page' => 'shop',
             'css' => [
-                'home',
+                'shop',
+                'about',
             ],
             'js' => [
                 'main',
@@ -33,8 +38,8 @@ class Home extends Controller
             "settings" => $settings,
             "menus" => $menus,
             "sliders" => $sliders,
-            "productNews" => $productNews,
-            "productFeatureds" => $productFeatureds,
+            "cates" => $cates,
+            "products" => $products,
         ]);
     }
 }

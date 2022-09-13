@@ -3,14 +3,23 @@ class User extends Controller
 {
     private $users;
     private $groups;
+    private $setting;
+    private $menu;
     public function __construct()
     {
         $this->users = $this->model('UserModel');
         $this->groups = $this->model('GroupModel');
+        $this->setting = $this->model("SettingModel");
+        $this->menu = $this->model("MenuModel");
     }
-
-    public function login()
+    //index == login
+    public function index()
     {
+        if (isset($_SESSION['user'])) {
+            header('Location: ' . _WEB_ROOT . '/home');
+        }
+        $settings = $this->setting->getSetting("");
+        $menus = $this->menu->getMenu("");
         if (isset($_POST['login']) && $_POST['login'] != "") {
             $email = $_POST['email'];
             $password = $_POST['password'];
@@ -26,6 +35,8 @@ class User extends Controller
                     $thongbao = 'Password không đúng';
                     return $this->view('client', [
                         'page' => 'login',
+                        "settings" => $settings,
+                        "menus" => $menus,
                         'css' => [
                             'style',
                             'login'
@@ -41,6 +52,8 @@ class User extends Controller
                 $thongbao = 'Email không đúng';
                 return $this->view('client', [
                     'page' => 'login',
+                    "settings" => $settings,
+                    "menus" => $menus,
                     'css' => [
                         'style',
                         'login'
@@ -56,6 +69,8 @@ class User extends Controller
 
             return $this->view('client', [
                 'page' => 'login',
+                "settings" => $settings,
+                "menus" => $menus,
                 'css' => [
                     'style',
                     'login'
@@ -69,7 +84,11 @@ class User extends Controller
     }
     public function register()
     {
-
+        if (isset($_SESSION['user'])) {
+            header('Location: ' . _WEB_ROOT . '/home');
+        }
+        $settings = $this->setting->getSetting("");
+        $menus = $this->menu->getMenu("");
         if (isset($_POST['register']) && $_POST['register'] != "") {
             $thongbao = "";
             $color = "";
@@ -95,6 +114,8 @@ class User extends Controller
                     $thongbao = 'Đăng ký thất bại';
                     return $this->view('client', [
                         'page' => 'register',
+                        "settings" => $settings,
+                        "menus" => $menus,
                         'css' => [
                             'register',
                             'style',
@@ -113,6 +134,8 @@ class User extends Controller
                 $thongbao = "Nhap lai mat khau sai";
                 return $this->view('client', [
                     'page' => 'register',
+                    "settings" => $settings,
+                    "menus" => $menus,
                     'css' => [
                         'register',
                         'style',
@@ -129,6 +152,8 @@ class User extends Controller
 
             return $this->view('client', [
                 'page' => 'register',
+                "settings" => $settings,
+                "menus" => $menus,
                 'css' => [
                     'register',
                     'style',

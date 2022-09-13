@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&family=Roboto&display=swap" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <link rel="icon" href="<?php echo _PATH_ROOT_PUBLIC . '/img/logo/plant4.png' ?>" />
     <title>VTea</title>
     <?php
@@ -90,7 +91,18 @@
                     <div class="cart">
                         <i class="fa-solid fa-bag-shopping"></i>
                         <!-- <i class="fa-thin fa-bag-shopping"></i> -->
-                        <span class="cart-count">0</span>
+                        <span class="cart-count"><?php
+                                                    if (isset($_SESSION['cart']) && $_SESSION['cart']) {
+                                                        $totalLength = 0;
+                                                        foreach ($_SESSION['cart'] as $item) {
+                                                            $totalLength  += (int)$item['soluong'];
+                                                        }
+
+                                                        echo $totalLength;
+                                                    } else {
+                                                        echo '0';
+                                                    }
+                                                    ?></span>
                     </div>
                 </div>
             </div>
@@ -213,7 +225,7 @@
 
     <div class="model-cart">
         <div class="model-cart-content">
-            <div class="model-cart-heading">
+            <div class="model-cart-heading h-[10vh]">
                 <div class="text">
                     <span>shopping cart</span>
                 </div>
@@ -222,40 +234,57 @@
                     <i class="fa-solid fa-xmark"></i>
                 </div>
             </div>
-            <div class="model-cart-center">
-                <div class="cart-center-item">
-                    <div class="cart-center-left">
-                        <p class="title">Hezb Mazzubium Vulgaze</p>
-                        <div class="price-amount">
-                            <span class="cart-center-amount">1</span>
-                            X
-                            <span class="cart-center-price">$45.00</span>
-                        </div>
-                    </div>
-                    <div class="cart-center-right">
-                        <img src="<?php echo _PATH_ROOT_PUBLIC . '/img/product/Hezb Mazzubium Vulgaze.jpg' ?>" alt="" />
-                        <span class="cart-center-close">
-                            <i class="fa-solid fa-xmark"></i>
-                        </span>
-                    </div>
-                </div>
+            <div class="model-cart-center overflow-auto h-[70vh] max-h-[70vh]">
+                <?php
+                $sum = 0;
+                if (isset($_SESSION['cart']) && $_SESSION['cart']) {
+                    foreach ($_SESSION['cart'] as $item) {
+                        $sum += (float)$item['total'];
+                        if (isset($item['name']) && !empty($item)) {
+                ?>
+                            <div class="cart-center-item">
+                                <div class="cart-center-left">
+                                    <p class="title"><?php echo $item['name'] ?></p>
+                                    <div class="price-amount">
+                                        <span class="cart-center-amount"><?php echo $item['soluong'] ?></span>
+                                        X
+                                        <span class="cart-center-price">$ <?php echo $item['price'] ?></span>
+                                    </div>
+                                </div>
+                                <div class="cart-center-right">
+                                    <img src="<?php echo _PATH_UPLOAD_PRODUCT . $item['img'] ?>" alt="">
+                                    <span data-pathimg="<?php echo _PATH_UPLOAD_PRODUCT ?>" data-url="<?php echo _WEB_ROOT . '/ajax' ?>" data-id="<?php echo $item['id'] ?>" class="cart-center-close hover:scale-150">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </span>
+                                </div>
+                            </div>
+                <?php
+                        }
+                    }
+                }
+
+                ?>
             </div>
-            <div class="model-cart-footer">
+            <div class="model-cart-footer h-[20vh]">
                 <div class="cart-footer-total">
                     <span>Total</span>
-                    <span>$45.00</span>
+                    <span>$<?php echo number_format($sum, 2) ?></span>
                 </div>
                 <div class="cart-footer-btn">
-                    <a href="#"> <button class="view">View Cart</button></a>
+                    <a href="<?php echo _WEB_ROOT . '/Cart' ?>"> <button class="view">View Cart</button></a>
                     <a href="#"><button class="check">Checkout</button></a>
                 </div>
             </div>
         </div>
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         AOS.init();
     </script>
