@@ -64,7 +64,7 @@
                 <img src="<?php echo _PATH_UPLOAD_PRODUCT . $new['img'] ?>">
                 <div class="new-arrival-other">
                   <div class="other-icon">
-                    <span class="other-icon-cart">
+                    <span class="other-icon-cart" data-id="<?php echo $new['id'] ?>">
                       <i class="fa-solid fa-bag-shopping"></i>
                     </span>
                     <span>
@@ -242,7 +242,7 @@
                 <img src="<?php echo _PATH_UPLOAD_PRODUCT . $new['img'] ?>">
                 <div class="new-arrival-other">
                   <div class="other-icon">
-                    <span class="other-icon-cart">
+                    <span class="other-icon-cart" data-id="<?php echo $new['id'] ?>">
                       <i class="fa-solid fa-bag-shopping"></i>
                     </span>
                     <span>

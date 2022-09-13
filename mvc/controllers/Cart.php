@@ -1,5 +1,5 @@
 <?php
-class Home extends Controller
+class Cart extends Controller
 {
     private $setting;
     private $menu;
@@ -19,12 +19,12 @@ class Home extends Controller
         $settings = $this->setting->getSetting("");
         $menus = $this->menu->getMenu("");
         $sliders = $this->slider->getSlider("");
-        $productNews = $this->product->getProsNew();
-        $productFeatureds = $this->product->getProsfeatured();
+        $products = $this->product->getPros("");
+
         return $this->view('client', [
-            'page' => 'index',
+            'page' => 'Cart',
             'css' => [
-                'home',
+                'about',
             ],
             'js' => [
                 'main',
@@ -33,8 +33,8 @@ class Home extends Controller
             "settings" => $settings,
             "menus" => $menus,
             "sliders" => $sliders,
-            "productNews" => $productNews,
-            "productFeatureds" => $productFeatureds,
+            "products" => $products,
+
         ]);
     }
 }
