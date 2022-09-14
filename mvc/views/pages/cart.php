@@ -7,58 +7,91 @@
         </div>
     </div>
     <div class="cart  ">
-        <div class="container">
-            <div class="row ">
+        <div class="w-[70%] mx-[auto]">
+            <div class="row body-font font-Poppins">
                 <div class="col-8">
-                    <form action="" method="POST" enctype="multipart/form" class="cart-form">
+                    <form action="" method="POST" enctype="multipart/form" class="cart-form m-0">
 
-                        <table class="cf-table">
+                        <table class="cf-table text-[#323334] w-full border-spacing-4">
                             <thead>
-                                <tr class="cft-title g-5">
+                                <tr class="cft-title font-Poppins  ">
                                     <th>Product</th>
-                                    <th></th>
+                                    <th> </th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Subtotal</th>
                                 </tr>
+
                             </thead>
-                            <tbody>
+
+                            <tbody class=" ">
                                 <?php
                                 foreach ($data['products'] as $pro) {
                                     echo '
                             
-                            <tr class="cft-content">
-                                <td ><img src="' . _PATH_UPLOAD_PRODUCT . $pro['img'] . '" alt="" class="w-20"></td>
-                                <td>' . $pro['name'] . '</td>
+                            <tr class="cft-content   my-[12px] border-b">
+                                <td class="py-2"><img src="' . _PATH_UPLOAD_PRODUCT . $pro['img'] . '" alt="" class="w-20"></td>
+                                <td><a href"#" class="hover:text-[#98cb50]  cursor-pointer">' . $pro['name'] . '</a></td>
                                 <td>' . $pro['price'] . '</td>
+                                <td > 
+                                    <span class=" hover:bg-[#98cb50] transition-all  hover:text-white border inline-block leading-none p-[4px] w-[30px] text-center cursor-pointer min-w-[30px] text-center cursor-pointer max-w-[30px] text-center cursor-pointer h-[30px] text-center cursor-pointer">-</span>
+                                    <span class="  transition-all hover:text-[#98cb50] inline-block leading-none p-[4px] w-[30px] text-center cursor-pointer min-w-[30px] text-center cursor-pointer max-w-[30px] text-center cursor-pointer h-[30px] text-center cursor-pointer">2</span>
+                                    <span class=" hover:bg-[#98cb50] transition-all hover:text-white border inline-block leading-none p-[4px] w-[30px] text-center cursor-pointer min-w-[30px] text-center cursor-pointer max-w-[30px] text-center cursor-pointer h-[30px] text-center cursor-pointer">+</span>
+
+
+                                </td>
                                 <td></td>
-                                <td></td>
+                                
                             </tr>
-                            </hr>
+                            
                             ';
                                 }
+
                                 ?>
+
                             </tbody>
                         </table>
                     </form>
                 </div>
-                <!-- <div class="col-4">
+                <div class="col-4 ">
                     <div class="border">
-                        <div class="cr-title">
-                            <h2 class="font-bold">CART TOTALS
-                            </h2>
-                            <P class="flex justify-between font-bold">
-                                <span>Subtotal</span>
-                                <span class="subtotal">$324.48</span>
-                            </P>
+                        <div class="cr-title p-[30px] ">
+                            <div class="cr-top ">
+                                <h2 class="font-bold text-[2rem] body-font font-Poppins pb-[20px]">CART TOTALS
+                                </h2>
+                                <P class="flex justify-between font-bold">
+                                    <span>Subtotal</span>
+                                    <span class="subtotal py-[5px]">$324.48</span>
+                                </P>
+                            </div>
+                            <hr>
+                            <div class="cr-center py-[28px]">
+                                <h3>Shipping</h3>
+                                <p> Flat rate: <span class="flat_rate"> $10.00</span></p>
+                                <p>Shipping to <span class="font-bold">Address</span>
+                                </p>
+
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Address:</label>
+                                    <textarea class="form-control" id="" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="cr-bottom">
+                                <P class="flex justify-between font-bold">
+                                    <span>Total</span>
+                                    <span class="subtotal">$324.48</span>
+                                </P>
+                                <button class="bg-[#323334] text-[#fff] p-[4px] w-full">PROCEED TO CHECKOUT <i class="fa-solid fa-arrow-right-long"></i></button>
+                            </div>
 
                         </div>
                     </div>
-                </div> -->
-                <div class="col-lg-4 ">
+                </div>
+                <!-- <div class="col-lg-4 ">
 
                     <div class="cart-collaterals sticky-sidebar">
-                        <div class="cart_totals border -md ">
+                        <div class="cart_totals border-md ">
                             <div class="cart-information">
 
 
@@ -148,7 +181,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
         </div>
