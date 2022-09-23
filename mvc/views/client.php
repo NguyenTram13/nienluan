@@ -11,10 +11,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <link href="https://css.gg/search.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&family=Roboto&display=swap" rel="stylesheet" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.4/jquery.rateyo.min.css" integrity="sha512-JEUoTOcC35/ovhE1389S9NxeGcVLIqOAEzlpcJujvyUaxvIXJN9VxPX0x1TwSo22jCxz2fHQPS1de8NgUyg+nA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="<?php echo _PATH_ROOT_PUBLIC . '/img/logo/plant4.png' ?>" />
+    <link rel="stylesheet" href="./dist/output.css">
     <title>VTea</title>
     <?php
 
@@ -30,8 +33,8 @@
         <div class="header">
             <div class="header-content">
                 <div class="header-logo">
-                    <a href="index.html">
-                        <img src="<?php echo _PATH_UPLOAD_SETTING . $data['settings'][0]['config_value'] ?>" alt="" class="logo" />
+                    <a href="<?php echo _WEB_ROOT ?>">
+                        <img src="<?php echo _PATH_UPLOAD_SETTING . $data['settings'][2]['config_value'] ?>" alt="" class="logo" />
                     </a>
                 </div>
                 <div class="header-link">
@@ -234,7 +237,7 @@
                     <i class="fa-solid fa-xmark"></i>
                 </div>
             </div>
-            <div class="model-cart-center overflow-auto h-[70vh] max-h-[70vh]">
+            <div class="model-cart-center border-none overflow-auto h-[70vh] max-h-[70vh]">
                 <?php
                 $sum = 0;
                 if (isset($_SESSION['cart']) && $_SESSION['cart']) {
@@ -258,21 +261,32 @@
                                     </span>
                                 </div>
                             </div>
-                <?php
+                    <?php
                         }
                     }
-                }
 
+
+                    ?>
+
+                <?php } else {
                 ?>
+                    <div class="empty-model-cart">
+                        <p class="text-[#888888] text-center pt-3">No products in the cart.</p>
+                    </div>
+
+
+                <?php
+                } ?>
             </div>
+
             <div class="model-cart-footer h-[20vh]">
                 <div class="cart-footer-total">
                     <span>Total</span>
                     <span>$<?php echo number_format($sum, 2) ?></span>
                 </div>
                 <div class="cart-footer-btn">
-                    <a href="<?php echo _WEB_ROOT . '/Cart' ?>"> <button class="view">View Cart</button></a>
-                    <a href="#"><button class="check">Checkout</button></a>
+                    <a href="<?php echo _WEB_ROOT . '/Cart/index' ?>"> <button class="view">View Cart</button></a>
+                    <a href="<?php echo _WEB_ROOT . '/Checkout/index' ?>"><button class="check">Checkout</button></a>
                 </div>
             </div>
         </div>
@@ -289,6 +303,7 @@
         AOS.init();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.4/jquery.rateyo.min.js" integrity="sha512-09bUVOnphTvb854qSgkpY/UGKLW9w7ISXGrN0FR/QdXTkjs0D+EfMFMTB+CGiIYvBoFXexYwGUD5FD8xVU89mw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <?php
 
     foreach ($data['js'] as $item) {
@@ -300,7 +315,74 @@
         }
     }
     ?>
+    <script>
+        const number_rate = document.querySelector('.number-rate');
+        $(function() {
 
+            $("#rateYo").rateYo({
+                rating: 1.5,
+                halfStar: true,
+                starWidth: "25px"
+            }).on('rateyo.change', function(e, data) {
+                number_rate.textContent = data.rating;
+            });
+
+        });
+        $(function() {
+
+            $("#rateYoSum").rateYo({
+                rating: 3.5,
+                readOnly: true,
+                starWidth: "20px"
+            });
+
+        });
+        $(function() {
+
+            $("#rateYo1").rateYo({
+                rating: 5,
+                readOnly: true,
+                starWidth: "18px"
+            });
+
+        });
+        $(function() {
+
+            $("#rateYo2").rateYo({
+                rating: 4,
+                readOnly: true,
+                starWidth: "18px"
+            });
+
+        });
+        $(function() {
+
+            $("#rateYo3").rateYo({
+                rating: 3,
+                readOnly: true,
+                starWidth: "18px"
+            });
+
+        });
+        $(function() {
+
+            $("#rateYo4").rateYo({
+                rating: 2,
+                readOnly: true,
+                starWidth: "18px"
+            });
+
+        });
+        $(function() {
+
+            $("#rateYo5").rateYo({
+                rating: 1,
+                readOnly: true,
+                starWidth: "18px"
+            });
+
+        });
+    </script>
 </body>
 
 </html>

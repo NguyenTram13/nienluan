@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main ">
     <div class="about-background">
         <div class="about-background-content">
             <div class="ab-content-text">
@@ -6,7 +6,7 @@
             </div>
         </div>
     </div>
-    <div class="main-shop">
+    <div class="main-shop w-[70%] mx-[auto]">
         <div class="main-shop-content container">
             <div class="row">
                 <div class="col-3">
@@ -63,11 +63,16 @@
                                 <span class="filter-left"></span>
                                 <span class="filter-right"></span>
                             </div>
-                            <div class="filter-price">
+                            <div class="filter-price ">
                                 <span>Price:</span>
-                                <span>$0</span>
-                                <span>-</span>
-                                <span>$110</span>
+                                <div class="flex gap-2">
+
+                                    <span>$0</span>
+                                    <span>
+                                        <input id="small-range" type="range" value="50" class="mb-6 w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer range-sm dark:bg-gray-700">
+                                    </span>
+                                    <span>$110</span>
+                                </div>
 
                             </div>
                             <button class="btn-filter">
@@ -142,7 +147,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="arrival-product-content">
-                                                    <h3><a href="details-product.html"><?php echo $new['name'] ?></a></h3>
+                                                    <h3><a href="<?php echo _WEB_ROOT . '/Detail/index/' . $new['id'] ?>"><?php echo $new['name'] ?></a></h3>
                                                     <div class="arrival-product-evaluate">
                                                         <span class="raiting">
                                                             <i class="fa-solid fa-star"></i>

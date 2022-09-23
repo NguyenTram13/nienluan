@@ -34,6 +34,7 @@
         <tbody>
             <?php
             if (isset($data['cates']) && !empty($data['cates'])) {
+
                 foreach ($data['cates'] as $item) {
             ?>
 

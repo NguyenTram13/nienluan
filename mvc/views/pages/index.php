@@ -11,7 +11,7 @@
       <div class="w-50 background-text bg-text1">
         <h4>' . $slider['caption'] . '</h4>
         <h2 class=" text-center">' . $slider['title'] . '</h2>
-        <a>shop now
+        <a href="' . _WEB_ROOT . '/Shop' . '">shop now
           <i class="fa-solid fa-arrow-right-long"></i>
         </a>
       </div>
@@ -41,7 +41,7 @@
       </div>
     </div>
   </div>
-  <div class="main-product">
+  <div class="main-product w-[70%] mx-[auto]">
     <div class="new-arrival-title">
       <div data-aos="fade-up" data-aos-duration="1000">
         <span>
@@ -54,7 +54,7 @@
     </div>
     <div class="container new-arrival-list" data-aos="fade-up" data-aos-duration="3000">
 
-      <div class="row product-list   gx-3">
+      <div class="row product-list product-list2  gx-3">
         <?php
         foreach ($data['productNews'] as $new) {
         ?>
@@ -64,7 +64,7 @@
                 <img src="<?php echo _PATH_UPLOAD_PRODUCT . $new['img'] ?>">
                 <div class="new-arrival-other">
                   <div class="other-icon">
-                    <span class="other-icon-cart" data-id="<?php echo $new['id'] ?>">
+                    <span class="other-icon-cart" data-url="<?php echo _WEB_ROOT . '/ajax' ?>" data-pathimg="<?php echo _PATH_UPLOAD_PRODUCT  ?>" data-id="<?php echo $new['id'] ?>">
                       <i class="fa-solid fa-bag-shopping"></i>
                     </span>
                     <span>
@@ -84,7 +84,7 @@
                 </div>
               </div>
               <div class="arrival-product-content">
-                <h3><a href="details-product.html"><?php echo $new['name'] ?></a></h3>
+                <h3><a href="<?php echo _WEB_ROOT . '/Detail/index/' . $new['id'] ?>"><?php echo $new['name'] ?></a></h3>
                 <div class="arrival-product-evaluate">
                   <span class="raiting">
                     <i class="fa-solid fa-star"></i>
@@ -109,7 +109,7 @@
     </div>
   </div>
 
-  <div class="main-work">
+  <div class="main-work w-[70%] mx-[auto]">
     <div class="main-work-title">
       <div data-aos="fade-up" data-aos-duration="1000">
         <span>
@@ -220,7 +220,7 @@
     </div>
   </div>
 
-  <div class="main-product" data-aos="fade-up">
+  <div class="main-product w-[70%] mx-[auto]" data-aos="fade-up">
     <div class="new-arrival-title">
       <div data-aos="fade-up" data-aos-duration="1000">
         <span>
@@ -232,12 +232,12 @@
       <h2 data-aos="fade-up" data-aos-duration="2000">Our Featured</h2>
     </div>
     <div class="container new-arrival-list" data-aos="fade-up" data-aos-duration="3000">
-      <div class="row product-list2">
+      <div class="row product-list2  ">
         <?php
         foreach ($data['productFeatureds'] as $new) {
         ?>
           <div class="col-xs-12 col-sm-6 col-lg-3 ">
-            <div class="item new-arrival-item shadow " data-id=" <?php echo $new['id'] ?>">
+            <div class="item new-arrival-item shadow " data-url="<?php echo _WEB_ROOT . '/ajax' ?>" data-pathimg="<?php echo _PATH_UPLOAD_PRODUCT  ?>" data-id="<?php echo $new['id'] ?>">
               <div class="new-arrival-img">
                 <img src="<?php echo _PATH_UPLOAD_PRODUCT . $new['img'] ?>">
                 <div class="new-arrival-other">
@@ -262,7 +262,7 @@
                 </div>
               </div>
               <div class="arrival-product-content">
-                <h3><a href="details-product.html"><?php echo $new['name'] ?></a></h3>
+                <h3><a href="<?php echo _WEB_ROOT . '/Detail/index/' . $new['id'] ?>"><?php echo $new['name'] ?></a></h3>
                 <div class="arrival-product-evaluate">
                   <span class="raiting">
                     <i class="fa-solid fa-star"></i>
@@ -287,7 +287,7 @@
     </div>
   </div>
 
-  <div class="main-client">
+  <div class="main-client ">
     <div class="main-client-content container">
       <div class="row">
         <div class="col-xs-12 col-md-6 main-client-left" data-aos="fade-up">
@@ -316,7 +316,7 @@
       </div>
     </div>
   </div>
-  <div class="main-last" data-aos="fade-up" data-aos-duration="3000">
+  <div class="main-last w-[70%] mx-[auto]" data-aos="fade-up" data-aos-duration="3000">
     <div class="main-last-content">
       <div class="main-last-title">
         <div>

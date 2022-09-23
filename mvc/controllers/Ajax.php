@@ -23,6 +23,13 @@ class Ajax extends Controller
         $id = $_POST['id'];
         print_r($this->product->addProductCart($id));
     }
+    function addCard2()
+    {
+        $id = $_POST['id'];
+        $number = $_POST['number'];
+
+        print_r($this->product->addProductCart($id, $number));
+    }
     function removeItem()
     {
         $id = $_POST['id'];
