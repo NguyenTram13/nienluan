@@ -1,13 +1,33 @@
 <?php
 class CategoryModel extends DB
 {
+    function getCateGroup($kyw)
+    {
+        if ($kyw != "") {
+            $sql = "SELECT category.name,count(products.id) as count_pros, category.id FROM category INNER JOIN products ON category.id=products.idCate
+            WHERE name like '%" . $kyw . "%' 
+            GROUP BY category.name
+            order by category.id desc";
+        } else {
+
+            $sql = "SELECT category.name,count(products.id) as count_pros, category.id FROM category INNER JOIN products ON category.id=products.idCate
+            -- WHERE name like '%" . $kyw . "%' 
+            GROUP BY category.name
+            order by category.id desc";
+        }
+        return $this->pdo_query($sql);
+    }
     function getCate($kyw)
     {
         if ($kyw != "") {
-            $sql = "SELECT * FROM category WHERE name like '%" . $kyw . "%' order by id desc";
+            $sql = "SELECT * FROM category 
+            WHERE name like '%" . $kyw . "%' 
+            order by id desc";
         } else {
 
-            $sql = "SELECT * FROM category order by id desc";
+            $sql = "SELECT * FROM category 
+            -- WHERE name like '%" . $kyw . "%' 
+            order by id desc";
         }
         return $this->pdo_query($sql);
     }

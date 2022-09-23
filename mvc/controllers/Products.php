@@ -71,7 +71,7 @@ class Products extends Controller
             } else {
                 $thongbao = "Thêm sản phẩm thất bại";
             }
-            $listCate = $this->cates->getCate();
+            $listCate = $this->cates->getCate("");
 
             return $this->view(
                 'admin',
@@ -139,7 +139,7 @@ class Products extends Controller
                 $thongbao = "Sửa sản phẩm thất bại";
             }
             $onepros = $this->products->getone_Pros($id);
-            $listCate = $this->cates->getCate();
+            $listCate = $this->cates->getCate("");
             $imgDetail = $this->products->getImgDetail($id);
 
 
@@ -160,7 +160,7 @@ class Products extends Controller
             $imgDetail = $this->products->getImgDetail($id);
             // print_r($imgDetail);
             // die();
-            $listCate = $this->cates->getCate();
+            $listCate = $this->cates->getCate("");
 
             return $this->view(
                 'admin',

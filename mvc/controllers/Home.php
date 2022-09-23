@@ -28,6 +28,7 @@ class Home extends Controller
             ],
             'js' => [
                 'main',
+                'ajax',
             ],
             "settings" => $settings,
             "menus" => $menus,

@@ -63,13 +63,32 @@ class ProductModel extends DB
         if ($kyw != "") {
             $sql .= " AND name like '%" . $kyw . "%'";
         }
-        if ($cate != 0) {
+        if ($cate > 0) {
             $sql .= " AND idCate  = '$cate'";
         }
         $sql .= " order by id desc";
         return
 
             $this->pdo_query($sql);
+    }
+    function getCatePros($id, $idCate)
+    {
+        $sql = "SELECT * FROM products WHERE idCate='$idCate' 
+            AND id <> $id
+        ";
+
+
+        $sql .= " order by id desc";
+        return
+
+            $this->pdo_query($sql);
+    }
+
+
+    function getImageDetail($id)
+    {
+        $sql = "SELECT * FROM  image_product WHERE product_id = $id";
+        return $this->pdo_query($sql);
     }
     function getProsNew()
     {
@@ -84,5 +103,61 @@ class ProductModel extends DB
 
         $sql .= " order by views desc LIMIT 4";
         return $this->pdo_query($sql);
+    }
+
+
+    function addProductCart($id, $number = 1)
+    {
+        $itemPro = $this->getone_Pros($id);
+        $itemPro['soluong'] = $number;
+        $itemPro['total'] = $itemPro['soluong'] * $itemPro['price'];
+
+        $check = 0;
+        if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+
+            foreach ($_SESSION['cart'] as $key => $item) {
+                if (isset($item['id']) && $item['id']) {
+
+                    if ($item['id'] == $id) {
+                        if ($number == 1) {
+
+                            $item['soluong']++;
+                        } else {
+                            $item['soluong']--;
+                        }
+                        $item['total'] = $item['soluong'] * $item['price'];
+                        $itemNew = $item;
+                        $keyNew  = $key;
+                        $check = 1;
+                    }
+                }
+            }
+            if ($check == 1) {
+                $_SESSION['cart'][$keyNew] = [];
+                $_SESSION['cart'][$keyNew] = $itemNew;
+            } else {
+
+                array_push($_SESSION['cart'], $itemPro);
+            }
+        } else {
+            $_SESSION['cart'] = [];
+            array_push($_SESSION['cart'], $itemPro);
+        }
+        return json_encode($_SESSION['cart']);
+    }
+    function  removeItem($id)
+    {
+        if (isset($_SESSION['cart']) && $_SESSION['cart']) {
+            $keyRemove = -1;
+            foreach ($_SESSION['cart'] as $key => $item) {
+                if ($item['id'] == $id) {
+                    $keyRemove = $key;
+                }
+            }
+            if ($keyRemove > -1) {
+                array_splice($_SESSION['cart'], $keyRemove, 1);
+            }
+        }
+        return json_encode($_SESSION['cart']);
     }
 }
