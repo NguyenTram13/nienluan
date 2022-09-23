@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main ">
     <div class="main-register">
         <h1>ĐĂNG KÝ</h1>
         <p class="mess"></p>

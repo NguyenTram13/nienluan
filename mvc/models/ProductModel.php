@@ -71,6 +71,25 @@ class ProductModel extends DB
 
             $this->pdo_query($sql);
     }
+    function getCatePros($id, $idCate)
+    {
+        $sql = "SELECT * FROM products WHERE idCate='$idCate' 
+            AND id <> $id
+        ";
+
+
+        $sql .= " order by id desc";
+        return
+
+            $this->pdo_query($sql);
+    }
+
+
+    function getImageDetail($id)
+    {
+        $sql = "SELECT * FROM  image_product WHERE product_id = $id";
+        return $this->pdo_query($sql);
+    }
     function getProsNew()
     {
         $sql = "SELECT * FROM products WHERE 1";
@@ -87,10 +106,10 @@ class ProductModel extends DB
     }
 
 
-    function addProductCart($id)
+    function addProductCart($id, $number = 1)
     {
         $itemPro = $this->getone_Pros($id);
-        $itemPro['soluong'] = 1;
+        $itemPro['soluong'] = $number;
         $itemPro['total'] = $itemPro['soluong'] * $itemPro['price'];
 
         $check = 0;
@@ -100,7 +119,12 @@ class ProductModel extends DB
                 if (isset($item['id']) && $item['id']) {
 
                     if ($item['id'] == $id) {
-                        $item['soluong']++;
+                        if ($number == 1) {
+
+                            $item['soluong']++;
+                        } else {
+                            $item['soluong']--;
+                        }
                         $item['total'] = $item['soluong'] * $item['price'];
                         $itemNew = $item;
                         $keyNew  = $key;

@@ -1,4 +1,25 @@
-import { product, loadItem } from "./data.js";
+const header = document.querySelector(".header");
+const heightHeader = header && header.offsetHeight;
+
+const modelDetail = document.querySelector(".model-detail");
+console.log(modelDetail);
+function scroll(e) {
+  let scroll = window.pageYOffset;
+  console.log(scroll);
+  if (scroll >= heightHeader) {
+    console.log("asda");
+    header.classList.add("bg_header");
+  } else {
+    header.classList.remove("bg_header");
+  }
+}
+window.addEventListener(
+  "scroll",
+  function () {
+    scroll();
+  },
+  false
+);
 
 window.addEventListener("load", function () {
   const cart = document.querySelector(".cart");
@@ -20,20 +41,6 @@ window.addEventListener("load", function () {
     // }
     if (!modelContaner.contains(e.target)) {
       modelCart.classList.remove("active");
-    }
-  });
-  const header = document.querySelector(".header");
-  const heightHeader = header && header.offsetHeight;
-  console.log(header);
-  console.log(heightHeader);
-
-  window.addEventListener("scroll", function (e) {
-    let scroll = window.pageYOffset;
-    // console.log(scroll);
-    if (scroll >= heightHeader) {
-      header.classList.add("bg_header");
-    } else {
-      header.classList.remove("bg_header");
     }
   });
 

@@ -20,7 +20,7 @@ class Shop extends Controller
     {
 
 
-        $cates = $this->category->getCate("");
+        $cates = $this->category->getCateGroup("");
         $settings = $this->setting->getSetting("");
         $menus = $this->menu->getMenu("");
         $sliders = $this->slider->getSlider("");

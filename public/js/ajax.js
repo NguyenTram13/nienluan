@@ -1,6 +1,8 @@
 $(document).ready(function () {
   const filterCate = document.querySelectorAll(".filter_cate");
   const productList = document.querySelector(".product-list");
+  const productList2 = document.querySelectorAll(".product-list2");
+
   const cartCount = document.querySelector(".cart-count");
   const cartCenter = document.querySelector(".model-cart-center");
   const sumMoney = document.querySelector(".cart-footer-total span:last-child");
@@ -153,7 +155,14 @@ $(document).ready(function () {
     }
   }
   const card = document.querySelectorAll(".other-icon-cart");
-  productList.addEventListener("click", function (e) {
+  productList2.forEach((item) => {
+    item.addEventListener("click", function (e) {
+      if (e.target.matches(".other-icon-cart i")) {
+        addCard(e);
+      }
+    });
+  });
+  productList?.addEventListener("click", function (e) {
     console.log(e.target);
     if (e.target.matches(".other-icon-cart i")) {
       addCard(e);
@@ -176,38 +185,172 @@ $(document).ready(function () {
     showMethod: "fadeIn",
     hideMethod: "fadeOut",
   };
+  function deleteItem(e) {
+    //xoas
+    let id = e.target.parentElement.dataset.id;
+    let url = e.target.parentElement.dataset.url;
+    let path_img = e.target.parentElement.dataset.pathimg;
+    console.log(path_img);
+    console.log(url);
+    if (id > 0) {
+      $.ajax({
+        type: "POST",
+        url: url + "/removeItem",
+        data: { id },
+        dataType: "text",
+        success: function (data) {
+          let response = JSON.parse(data);
+          console.log(response);
+          cartCenter.innerHTML = "";
+          let sum = 0;
+          let totalLength = 0;
+          response.forEach((item) => {
+            sum += +item.total;
+            totalLength += +item.soluong;
+
+            renderItemCart(item, path_img, url);
+          });
+          cartCount.textContent = totalLength;
+
+          sumMoney.textContent = formatter.format(sum);
+          subtotal ? (subtotal.textContent = formatter.format(sum)) : "";
+          subtotalFinnal
+            ? (subtotalFinnal.textContent = formatter.format(sum + 10))
+            : "";
+        },
+        error: function (e) {
+          console.log(e);
+        },
+      });
+    }
+    toastr.success("Delete item cart success!");
+  }
   cartCenter.addEventListener("click", function (e) {
     if (e.target.matches(".cart-center-close i")) {
-      //xoas
-      let id = e.target.parentElement.dataset.id;
-      let url = e.target.parentElement.dataset.url;
-      let path_img = e.target.parentElement.dataset.pathimg;
-      console.log(path_img);
-      console.log(url);
-      if (id > 0) {
+      deleteItem(e);
+    }
+  });
+
+  //
+  const cartList = document.querySelector(".cf-list");
+  const subtotalFinnal = document.querySelector(".subtotal-final");
+  function renderItemPageCart(item, path_img, url) {
+    let template = `
+    
+    <tr class="cft-content   my-[12px] border-b">
+    <td class="py-2 mx-[auto]"><span data-pathimg="${path_img}" data-url="${url}" data-id="${
+      item.id
+    }" class="remove-item absolute top-[4px] hover:scale-110 right-[12px] p-1 rounded-full shadow-lg bg-slate-600 cursor-pointer text-slate-50 leading-none"><i class="fa-solid fa-xmark"></i></span> <img src="${path_img}${
+      item.img
+    }" alt="" class="center w-20"></td>
+    <td><a href ="${url}" class="hover:text-[#98cb50]  cursor-pointer">${
+      item.name
+    }</a></td>
+    <td class="text-[#888888]">${formatter.format(item.price)}</td>
+    <td > 
+        <span data-id="${
+          item.id
+        }" data-url="${url}" data-pathimg="${path_img}" class="down-pro hover:bg-[#98cb50] transition-all  hover:text-white border inline-block leading-none p-[4px] w-[30px] text-center cursor-pointer min-w-[30px] text-center cursor-pointer max-w-[30px] text-center cursor-pointer h-[30px] text-center cursor-pointer">-</span>
+        <span class="  transition-all hover:text-[#98cb50] font-bold inline-block leading-none p-[4px] w-[30px] text-center cursor-pointer min-w-[30px] text-center cursor-pointer max-w-[30px] text-center cursor-pointer h-[30px] text-center cursor-pointer">${
+          item.soluong
+        }</span>
+        <span data-id="${
+          item.id
+        }" data-url="${url}" data-pathimg="${path_img}" class="up-pro hover:bg-[#98cb50] transition-all hover:text-white border inline-block leading-none p-[4px] w-[30px] text-center cursor-pointer min-w-[30px] text-center cursor-pointer max-w-[30px] text-center cursor-pointer h-[30px] text-center cursor-pointer">+</span>
+
+
+    </td>
+    <td class="font-bold">${formatter.format(item.total)}</td>
+    
+</tr>
+    `;
+
+    cartList.insertAdjacentHTML("beforeend", template);
+  }
+  const subtotal = document.querySelector(".subtotal");
+  cartList?.addEventListener("click", function (e) {
+    console.log("sdfsd");
+    if (e.target.matches(".down-pro")) {
+      let id = +e.target.dataset.id;
+      let url = e.target.dataset.url;
+      let path_img = e.target.dataset.pathimg;
+      let number = e.target.nextElementSibling.textContent;
+      if (+number > 1) {
+        e.target.nextElementSibling.textContent = +number - 1;
+
         $.ajax({
           type: "POST",
-          url: url + "/removeItem",
-          data: { id },
+          url: url + "/addCard2",
+          data: { id, number: -1 },
           dataType: "text",
           success: function (data) {
             let response = JSON.parse(data);
             console.log(response);
-            cartCount.textContent = response.length;
+            cartList.innerHTML = "";
             cartCenter.innerHTML = "";
+
             let sum = 0;
+            let totalLength = 0;
             response.forEach((item) => {
               sum += +item.total;
+              totalLength += +item.soluong;
+
+              renderItemPageCart(item, path_img, url);
               renderItemCart(item, path_img, url);
             });
-            sumMoney.textContent = formatter.format(sum);
+            cartCount.textContent = totalLength;
+
+            subtotal.textContent = formatter.format(sum);
+            subtotalFinnal.textContent = formatter.format(sum + 10);
           },
           error: function (e) {
             console.log(e);
           },
         });
       }
-      toastr.success("Delete item cart success!");
+    }
+    if (e.target.matches(".up-pro")) {
+      let id = +e.target.dataset.id;
+      let url = e.target.dataset.url;
+      let path_img = e.target.dataset.pathimg;
+      let number = e.target.previousElementSibling.textContent;
+      e.target.previousElementSibling.textContent = +number + 1;
+
+      $.ajax({
+        type: "POST",
+        url: url + "/addCard2",
+        data: { id, number: 1 },
+        dataType: "text",
+        success: function (data) {
+          let response = JSON.parse(data);
+          console.log(response);
+          cartList.innerHTML = "";
+          cartCenter.innerHTML = "";
+
+          let sum = 0;
+          let totalLength = 0;
+          response.forEach((item) => {
+            sum += +item.total;
+            totalLength += +item.soluong;
+
+            renderItemPageCart(item, path_img, url);
+            renderItemCart(item, path_img, url);
+          });
+          cartCount.textContent = totalLength;
+
+          subtotal.textContent = formatter.format(sum);
+          subtotalFinnal.textContent = formatter.format(sum + 10);
+        },
+        error: function (e) {
+          console.log(e);
+        },
+      });
+    }
+    if (e.target.matches(".remove-item i")) {
+      deleteItem(e);
+      e.target.parentElement.parentElement.parentElement.remove();
     }
   });
+
+  // productList.addEventListener("click", function (e) {});
 });
